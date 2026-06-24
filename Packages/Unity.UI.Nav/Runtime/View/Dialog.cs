@@ -16,6 +16,10 @@ namespace Unity.UI.Navs
             {
                 Close(button);
             };
+            if (Model.IsClosed)
+            {
+                Close(Model.Result);
+            }
         }
 
         public override void OnNavigationFrom(NavContext from)
@@ -24,10 +28,8 @@ namespace Unity.UI.Navs
             base.OnNavigationFrom(from);
         }
 
-        protected override void Update()
+        protected  void Update()
         {
-            base.Update();
-
             if (Model == null)
                 return;
 

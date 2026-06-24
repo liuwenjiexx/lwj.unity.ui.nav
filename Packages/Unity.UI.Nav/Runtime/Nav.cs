@@ -262,7 +262,8 @@ namespace Unity.UI.Navs
             string url = CurrentUrl;
             var ctx = Current.FindByUrl(url);
             if (ctx == null) return 0;
-            Back(ctx.Id);
+            if (!Back(ctx.Id))
+                return 0;
             return ctx.Id;
         }
 

@@ -78,6 +78,10 @@ namespace Unity.UI.Navs
         public virtual ViewResult GetActionResult(string actionName, NavContext context)
         {
             ViewResult view = null;
+
+            object defaultParameter;
+            context.RouteData.Values.TryGetValue(Route.ParameterName, out defaultParameter);
+
             if (!string.IsNullOrEmpty(actionName))
             {
                 object target = this;
@@ -106,11 +110,11 @@ namespace Unity.UI.Navs
                         else
                         {
                             value = Type.Missing;
-                            if (ps.Length == 1 && context.RouteData.Values.TryGetValue(Route.ParameterName, out var p) && p != null)
+                            if (ps.Length == 1 && defaultParameter != null)
                             {
-                                if (pInfo.ParameterType.IsAssignableFrom(p.GetType()))
+                                if (pInfo.ParameterType.IsAssignableFrom(defaultParameter.GetType()))
                                 {
-                                    value = p;
+                                    value = defaultParameter;
                                 }
                             }
                         }
@@ -143,8 +147,12 @@ namespace Unity.UI.Navs
             }
             //调用默认的 Action
             if (view == null)
-                view = View();
-
+            {
+                if (defaultParameter != null)
+                    view = View(defaultParameter);
+                else
+                    view = View();
+            }
             return view;
         }
 
