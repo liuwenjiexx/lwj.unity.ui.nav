@@ -34,7 +34,7 @@ namespace Unity.UI.Navs
         public virtual void OnLoad()
         {
             NavUtility.Log($"[OnLoad] [{name}]");
-            canvasGroup=  gameObject.GetComponent<CanvasGroup>();
+            canvasGroup = gameObject.GetComponent<CanvasGroup>();
             if (!canvasGroup)
                 canvasGroup = gameObject.AddComponent<CanvasGroup>();
             //Refresh();
@@ -61,7 +61,7 @@ namespace Unity.UI.Navs
 
             if (!gameObject.activeSelf)
                 gameObject.SetActive(true);
-            
+
             if (lastSelected)
             {
                 EventSystem.current.SetSelectedGameObject(lastSelected);
@@ -89,8 +89,22 @@ namespace Unity.UI.Navs
             }
             if (gameObject && gameObject.activeSelf != isActive)
                 gameObject.SetActive(isActive);
-      
-            if(canvasGroup&& canvasGroup.interactable)
+            bool interactable = false;
+
+            if (to != null)
+            {
+                if ((to.Flags & NavFlags.Float) != 0)
+                {
+                    interactable = true;
+                }
+                if ((to.Flags & NavFlags.Exclusive) != 0)
+                {
+                    interactable = false;
+                }
+            }
+
+
+            if (!interactable && canvasGroup && canvasGroup.interactable)
             {
                 canvasGroup.interactable = false;
                 disableInteractableCanvasGroup = canvasGroup;
@@ -141,7 +155,7 @@ namespace Unity.UI.Navs
             lastRefreshFrame = Time.frameCount;
         }
 
-      
+
 
         public virtual void Back()
         {

@@ -34,6 +34,11 @@ namespace Unity.UI.Navs
 
         public INavigation Navigation { get; private set; }
          
+        public int OwnerId { get; internal set; }
+
+
+        public List<int> OwnerIdList { get;    set; }
+
         //public bool IsClosed { get; set; }
     }
 }

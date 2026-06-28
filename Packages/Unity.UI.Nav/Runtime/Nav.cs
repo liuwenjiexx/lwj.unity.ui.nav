@@ -281,7 +281,19 @@ namespace Unity.UI.Navs
         }
         public static bool Back(int id)
         {
-            return Current.Back(id);
+            var ctx = Current.FindById(id);
+            bool suc= Current.Back(id);
+            if (suc)
+            {
+                if (ctx.OwnerIdList != null)
+                {
+                    foreach(var _ in ctx.OwnerIdList)
+                    {
+                        Remove(_);
+                    }
+                }
+            }
+            return suc;
         }
         public static async Task<bool> BackAsync(int id)
         {
@@ -355,7 +367,33 @@ namespace Unity.UI.Navs
         }
         public static bool Remove(int id)
         {
-            return Current.Remove(id);
+            var ctx = Current.FindById(id);
+            if (ctx == null) return false;
+          var suc=  Current.Remove(id);
+            if (suc)
+            {
+                if (ctx.OwnerIdList != null)
+                {
+                    foreach (var _ in ctx.OwnerIdList)
+                    {
+                        Remove(_);
+                    }
+                }
+            }
+            return suc;
+        }
+
+        public static void SetOwner(int id, int ownerId)
+        {
+            var ownerCtx = Current.FindById(ownerId);
+            if (ownerCtx == null) return;
+            if (ownerCtx.OwnerIdList == null)
+            {
+                ownerCtx.OwnerIdList = new();
+            }
+            ownerCtx.OwnerIdList.Add(id);
+            //var ctx = Current.FindById(id);
+            //ctx.OwnerId = ownerId;
         }
 
         public static void Clear()
