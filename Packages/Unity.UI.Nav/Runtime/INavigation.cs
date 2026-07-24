@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NUnit.Framework;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.UI.Routing;
@@ -14,6 +15,7 @@ namespace Unity.UI.Navs
         string CurrentUrl { get; }
         int Count { get; }
         RouteCollection Routes { get; }
+        IEnumerable<NavContext> Contexts { get; }
 
         event Action<NavBackingEventArgs> Backing;
 
@@ -48,7 +50,7 @@ namespace Unity.UI.Navs
 
         NavContext FindByUrl(string url);
 
-         
+
         bool Remove(int id);
 
         void Clear();

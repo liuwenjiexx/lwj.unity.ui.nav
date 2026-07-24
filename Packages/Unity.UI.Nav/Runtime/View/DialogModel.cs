@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using UnityEngine;
+using Unity.Async;
 
 namespace Unity.UI.Navs
 {
@@ -66,6 +69,12 @@ namespace Unity.UI.Navs
         public void ResetDiry()
         {
             IsDiried = false;
+        }
+
+        public async Task<int> WaitAsync()
+        {
+            await new WaitUntil(() => IsClosed);
+            return Result;
         }
     }
 

@@ -47,6 +47,7 @@ namespace Unity.UI.Navs
         }
 
 
+
         public event Action<NavBackingEventArgs> Backing;
 
         public event Action<NavBeforeEventArgs> BeforeNavigation;

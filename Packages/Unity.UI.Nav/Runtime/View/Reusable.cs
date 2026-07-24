@@ -38,6 +38,7 @@ namespace Unity.UI.Navs
 
         public static void Register(string viewName, GameObject go)
         {
+            //Debug.Log("Register Reusable: " + viewName + ", " + go);
             cached[viewName] = go;
         }
 
